@@ -3,6 +3,8 @@
  * _Static_assert. Cloudwalk has no idea how or why so don't ask.
  */
 //#include <SDL.h>
+#include <sys/systime.h>
+#include <ppu-types.h>
 
 #include "darkplaces.h"
 
@@ -32,7 +34,6 @@ void _nullcb(int a, void *b) {}
 void Sys_SDL_Dialog(const char *title, const char *string)
 {
 	if(!nocrashdialog)
-		//SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, title, string, NULL);
 		msgDialogOpen(MSG_DIALOG_ERROR|MSG_DIALOG_BTN_TYPE_OK, string, nullcb, NULL, NULL);
 }
 
@@ -57,7 +58,7 @@ unsigned int Sys_SDL_GetTicks (void)
 }
 void Sys_SDL_Delay (unsigned int milliseconds)
 {
-	SDL_Delay(milliseconds);
+	sysUsleep(milliseconds*1000);
 }
 
 int main(int argc, char *argv[])
